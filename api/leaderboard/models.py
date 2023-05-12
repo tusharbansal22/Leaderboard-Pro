@@ -11,7 +11,7 @@ from djongo import models
 class CustomUserManager(BaseUserManager):
     def create_user(self,username,first_name,last_name,email, password=None):
         if not username:
-            raise ValueError('Users must have an email address')
+            raise ValueError('Users must have an username')
 #self.normalize_username(username)
         user = self.model(username= username,first_name = first_name, last_name= last_name, email = email)
         user.set_password(password)
@@ -19,8 +19,8 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password):
-        user = self.create_user(email=email, password=password)
+    def create_superuser(self,username,first_name,last_name, email, password):
+        user = self.create_user(username= username, email=email, first_name = first_name, last_name= last_name,password=password)
         user.is_admin = True
         user.save(using=self._db)
         return user
@@ -40,7 +40,7 @@ class CustomUser(AbstractBaseUser):
     USERNAME_FIELD = 'username'
 
     def __str__(self):
-        return self.username
+        return self
 
     def has_perm(self, perm, obj=None):
         return True

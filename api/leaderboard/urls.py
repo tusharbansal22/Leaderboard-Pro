@@ -29,7 +29,7 @@ User = get_user_model()
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ["url", "username", "email", "is_staff", "groups"]
+        fields = ["url", "username", "first_name", "last_name","email", "is_staff", "groups"]
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):

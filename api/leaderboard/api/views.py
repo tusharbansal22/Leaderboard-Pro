@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated
-from .serializers import UserNamesSerializer,LeetcodeFriendsSerializer,GithubFriendsSerializer,CodechefFriendsSerializer,CodeforcesFriendsSerializer
+from .serializers import UserSerializer,UserNamesSerializer,LeetcodeFriendsSerializer,GithubFriendsSerializer,CodechefFriendsSerializer,CodeforcesFriendsSerializer
 from leaderboard.serializers import Cf_Serializer,CC_Serializer,LT_Serializer,GH_Serializer,OL_Serializer
 from leaderboard.models import UserNames,githubUser,codechefUser,codeforcesUser,LeetcodeUser,openlakeContributor,GithubFriends,LeetcodeFriends,CodechefFriends,CodeforcesFriends,OpenlakeFriends
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
@@ -23,7 +23,10 @@ logger = logging.getLogger(__name__)
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
+        #      <Error occur after this line>
         token = super().get_token(user)
+        logger.error(user)
+
 
         # Add custom claims
         token['username'] = user.username
@@ -136,7 +139,7 @@ def registerUser(request):
         gh_uname=request.data["gh_uname"]
         lt_uname=request.data["lt_uname"]
         user = User.objects.create_user(username=username, password=password, first_name=first_name,last_name=last_name,email=email)
-        logger.error(request.data)
+       
         if first_name!="" and  email!="" and username!="" and password!="":
             user.save()
             userName=UserNames(user=user,cc_uname=cc_uname,cf_uname=cf_uname,gh_uname=gh_uname,lt_uname=lt_uname)

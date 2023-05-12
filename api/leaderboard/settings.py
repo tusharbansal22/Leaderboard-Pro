@@ -102,7 +102,7 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
     'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
-
+    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.MyTokenObtainPairSerializer",
     'JTI_CLAIM': 'jti',
 
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
@@ -152,7 +152,7 @@ DATABASES = {
         'ENFORCE_SCHEMA': False,
         "NAME": 'BHirank',
             'CLIENT': {
-                'host': 'mongodb+srv://aayush:XknxfaxtZAE8bydB@leaderboarddb.ziz89b7.mongodb.net/?retryWrites=true&w=majority'
+                'host': 'mongodb+srv://qwerty:9mled9d8G7hwSzD7@leaderboarddb.ziz89b7.mongodb.net/?retryWrites=true&w=majority'
             }
 
 
