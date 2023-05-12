@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "django_celery_beat",
     "leaderboard",
     "rest_framework_simplejwt.token_blacklist",
+    "djongo",
+    
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -146,8 +148,27 @@ WSGI_APPLICATION = "leaderboard.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": 'djongo',
-        "NAME": 'LeaderBoardDB',
+        "ENGINE": 'djongo',   
+        'ENFORCE_SCHEMA': False,
+        "NAME": 'BHirank',
+            'CLIENT': {
+                'host': 'mongodb+srv://aayush:XknxfaxtZAE8bydB@leaderboarddb.ziz89b7.mongodb.net/?retryWrites=true&w=majority'
+            }
+
+
+        # "HOST": 'mongodb+srv://aayush:XknxfaxtZAE8bydB@leaderboarddb.ziz89b7.mongodb.net/BHirank?retryWrites=true&w=majority',
+        # 'USER': 'aayush',
+        # "PASSWORD": 'XknxfaxtZAE8bydB',
+
+
+        # 'CLIENT': {
+        #     "name": 'LeaderBoardPro',
+        #     'host': 'mongodb+srv://user1:AH2sIxqJywwpAMoy@leaderboarddb.ziz89b7.mongodb.net/LeaderBoardPro?retryWrites=true&w=majority',
+        #     'username': 'user1',
+        #     'password': 'AH2sIxqJywwpAMoy',
+        #     'authMechanism': 'SCRAM-SHA-1',
+        # }mongodb+srv://aayush:<password>@leaderboarddb.ziz89b7.mongodb.net/?retryWrites=true&w=majority
+
     }
 }
 
@@ -219,3 +240,6 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": crontab(minute=f"*/{OL_INTV}"),
     },
 }
+
+
+AUTH_USER_MODEL = 'leaderboard.CustomUser'

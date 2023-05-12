@@ -9,8 +9,16 @@ from .serializers import UserNamesSerializer,LeetcodeFriendsSerializer,GithubFri
 from leaderboard.serializers import Cf_Serializer,CC_Serializer,LT_Serializer,GH_Serializer,OL_Serializer
 from leaderboard.models import UserNames,githubUser,codechefUser,codeforcesUser,LeetcodeUser,openlakeContributor,GithubFriends,LeetcodeFriends,CodechefFriends,CodeforcesFriends,OpenlakeFriends
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
+
+import logging
+logger = logging.getLogger(__name__)
+
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -48,6 +56,7 @@ def post_UserNames(request):
     try:
         # data['user']=request.user.username
         # data=request.data
+        
         username_cc=request.data["cc_uname"]
         username_cf=request.data["cf_uname"]
         username_gh=request.data["gh_uname"]
@@ -114,7 +123,9 @@ def post_UserNames(request):
 @api_view(["POST"])
 @permission_classes((permissions.AllowAny,))
 def registerUser(request):
+    
     try:
+        
         first_name = request.data["first_name"]
         last_name=request.data['last_name']
         email=request.data['email']
@@ -125,6 +136,7 @@ def registerUser(request):
         gh_uname=request.data["gh_uname"]
         lt_uname=request.data["lt_uname"]
         user = User.objects.create_user(username=username, password=password, first_name=first_name,last_name=last_name,email=email)
+        logger.error(request.data)
         if first_name!="" and  email!="" and username!="" and password!="":
             user.save()
             userName=UserNames(user=user,cc_uname=cc_uname,cf_uname=cf_uname,gh_uname=gh_uname,lt_uname=lt_uname)
