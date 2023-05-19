@@ -10,8 +10,10 @@ from leaderboard.models import (
     LeetcodeFriends,
     CodechefFriends,
     CodeforcesFriends,
+    CustomUser
 )
 
+admin.site.register(CustomUser)
 admin.site.register(codeforcesUser)
 admin.site.register(githubUser)
 admin.site.register(codechefUser)

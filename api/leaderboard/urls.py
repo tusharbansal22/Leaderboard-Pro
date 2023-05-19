@@ -22,14 +22,17 @@ from django.urls import path, include
 from django.contrib.auth.models import  Group
 from rest_framework import serializers, viewsets, routers, permissions
 from leaderboard import views
+from leaderboard.models import CustomUser
+# from rest_framework.serializers import ModelSerializer
 
-from django.contrib.auth import get_user_model
-User = get_user_model()
+import logging
+logger = logging.getLogger(__name__)
+
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = User
-        fields = ["url", "username", "first_name", "last_name","email", "is_staff", "groups"]
+        model = CustomUser
+        fields = ["url", "username", "email", "is_staff", "groups"]
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -39,10 +42,9 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all().order_by("-usernames")
+    queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
-
 
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
