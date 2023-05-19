@@ -11,6 +11,7 @@ from leaderboard.models import UserNames,githubUser,codechefUser,codeforcesUser,
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
 #from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework_simplejwt.models import TokenUser
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -24,11 +25,14 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         #      <Error occur after this line>
-        token = super().get_token(user)
-        logger.error(user)
+        
+        student = User.objects.get(username= user.username)
+        logger.error(student._id)
+        token = super().get_token(student)
+        # logger.error(user)
 
 
-        # Add custom claims
+        # # Add custom claims
         token['username'] = user.username
         # ...
         return token
@@ -53,6 +57,7 @@ def current_user(request):
         'username': user.username,
         'email': user.email,
     })
+
 @api_view(["POST"])
 @permission_classes([permissions.IsAuthenticated])
 def post_UserNames(request):
@@ -138,17 +143,20 @@ def registerUser(request):
         cf_uname=request.data["cf_uname"]
         gh_uname=request.data["gh_uname"]
         lt_uname=request.data["lt_uname"]
+        
         user = User.objects.create_user(username=username, password=password, first_name=first_name,last_name=last_name,email=email)
-       
+        
         if first_name!="" and  email!="" and username!="" and password!="":
-            user.save()
+          
             userName=UserNames(user=user,cc_uname=cc_uname,cf_uname=cf_uname,gh_uname=gh_uname,lt_uname=lt_uname)
             userName.save()
             if cc_uname!="":
                 cc_user = codechefUser(username=cc_uname)
+                logger.error(cc_uname)
                 cc_user.save()
             if cf_uname!="":
                 cf_user = codeforcesUser(username=cf_uname)
+                logger.error(cf_uname)
                 cf_user.save()
             if gh_uname!="":
                 gh_user = githubUser(username=gh_uname)

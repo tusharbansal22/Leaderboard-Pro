@@ -13,10 +13,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from celery.schedules import crontab
 from datetime import timedelta
-
+import environ
+import dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# env = environ.Env()
+# environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -31,6 +34,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Application definition
 
@@ -95,7 +102,7 @@ SIMPLE_JWT = {
 
     'AUTH_HEADER_TYPES': ('Bearer',),
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
-    'USER_ID_FIELD': 'id',
+    'USER_ID_FIELD': '_id',
     'USER_ID_CLAIM': 'user_id',
     'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
 
@@ -152,7 +159,7 @@ DATABASES = {
         'ENFORCE_SCHEMA': False,
         "NAME": 'BHirank',
             'CLIENT': {
-                'host': 'mongodb+srv://qwerty:9mled9d8G7hwSzD7@leaderboarddb.ziz89b7.mongodb.net/?retryWrites=true&w=majority'
+                'host':'mongodb+srv://new-user:'+os.environ.get('DATABASE_PASS')+'@leaderboarddb.ziz89b7.mongodb.net/?retryWrites=true&w=majority' # env('DATABASE_HOST')
             }
 
 
@@ -160,7 +167,7 @@ DATABASES = {
         # 'USER': 'aayush',
         # "PASSWORD": 'XknxfaxtZAE8bydB',
 
-
+#'mongodb+srv://qwerty:9mled9d8G7hwSzD7@leaderboarddb.ziz89b7.mongodb.net/?retryWrites=true&w=majority'
         # 'CLIENT': {
         #     "name": 'LeaderBoardPro',
         #     'host': 'mongodb+srv://user1:AH2sIxqJywwpAMoy@leaderboarddb.ziz89b7.mongodb.net/LeaderBoardPro?retryWrites=true&w=majority',

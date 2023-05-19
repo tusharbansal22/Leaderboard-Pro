@@ -2,43 +2,66 @@ from django.db import models
 from datetime import datetime, timezone, timedelta
 # from django.contrib.auth.models import User
 
-
-
+from rest_framework_simplejwt.tokens import OutstandingToken
+from rest_framework_simplejwt.models import TokenUser
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from djongo import models
+from djongo.models import ObjectIdField
+from bson import ObjectId
 
+import logging
+logger = logging.getLogger(__name__)
 
 class CustomUserManager(BaseUserManager):
     def create_user(self,username,first_name,last_name,email, password=None):
         if not username:
             raise ValueError('Users must have an username')
 #self.normalize_username(username)
-        user = self.model(username= username,first_name = first_name, last_name= last_name, email = email)
+        user = self.model(username=username)
         user.set_password(password)
-       
+        user.email = email
+        user.first_name = first_name
+        user.last_name=last_name
+        if not user._id:  # Only generate if `_id` field is not set
+            user._id = ObjectId()
         user.save(using=self._db)
+        
         return user
 
-    def create_superuser(self,username,first_name,last_name, email, password):
-        user = self.create_user(username= username, email=email, first_name = first_name, last_name= last_name,password=password)
+    def create_superuser(self,username, password):
+        
+        user = self.model(
+            username=username
+        )
+        user.set_password(password)
         user.is_admin = True
+        user.staff = True
+        user.active = True
         user.save(using=self._db)
+
         return user
+    
+    def find_user_by_username(self, username):
+        try:
+            return self.get(username=username)
+        except self.model.DoesNotExist:
+            return None
 
 
 class CustomUser(AbstractBaseUser):
-    id = models.ObjectIdField(primary_key=True)
+    # _id = models.CharField(max_length = 25)
+    _id = ObjectIdField(primary_key=True, default = '')
     email = models.EmailField(verbose_name='email address', max_length=255, unique=True)
     username = models.CharField(max_length=64, unique=True)
-    first_name = models.CharField(max_length=64)
-    last_name = models.CharField(max_length=64)
+    first_name = models.CharField(max_length=64, blank = True,default = '')
+    last_name = models.CharField(max_length=64, blank = True,default = '')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-
+  
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'username'
-
+    # REQUIRED_FIELDS = ['full_name', 'gender', 'username',]
     def __str__(self):
         return self
 
@@ -47,14 +70,55 @@ class CustomUser(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+    
+    
 
     @property
     def is_staff(self):
         return self.is_admin
+    
+    class Meta:
+        pass
 
 
 # from django.contrib.auth import get_user_model
 # User = get_user_model()
+
+
+
+
+
+
+# Your other models here...
+
+# class CustomOutstandingTokenManager(models.Manager):
+#     def create(self, *args, **kwargs):
+#         user = kwargs.get('user')
+#         token = kwargs.get('token')
+        
+#         # Check if the user is already saved
+#         if not user.pk:
+#             user.save()
+        
+#         token_user = TokenUser.objects.create(user=user, token=token)
+#         kwargs['token_user'] = token_user
+        
+#         return super().create(*args, **kwargs)
+
+# class CustomOutstandingToken(OutstandingToken):
+#     objects = CustomOutstandingTokenManager()
+
+    # class Meta(OutstandingToken._meta):
+    #     # Add any custom Meta options here
+    #     ordering = ['-created']
+
+
+# Register the CustomOutstandingToken model in the Django admin if needed
+#admin.site.register(CustomOutstandingToken)
+
+
+
+
 
 
 class githubUser(models.Model):

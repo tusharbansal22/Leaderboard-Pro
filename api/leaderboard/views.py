@@ -32,6 +32,11 @@ MAX_DATE_TIMESTAMP = datetime.max.timestamp()
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
+
+import logging
+logger = logging.getLogger(__name__)
+
+
 @api_view(["GET"])
 @permission_classes((AllowAny,))
 def api_root(request, format=None):
@@ -102,7 +107,7 @@ class CodeforcesLeaderboard(
 ):
     queryset = codeforcesUser.objects.all()
     serializer_class = Cf_Serializer
-
+    logger.error(queryset)
     def _check_for_updates(self, cf_users):
         cf_outdated_users = []
         for cf_user in cf_users:
