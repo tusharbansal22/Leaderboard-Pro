@@ -12,7 +12,7 @@ from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIVi
 #from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.models import TokenUser
-
+from bson import ObjectId
 from django.contrib.auth import get_user_model
 User = get_user_model()
 

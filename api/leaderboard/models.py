@@ -122,6 +122,8 @@ class CustomUser(AbstractBaseUser):
 
 
 class githubUser(models.Model):
+    # _id = ObjectIdField(primary_key=True, default = '')
+    _id = ObjectIdField(primary_key=True, default = '')
     username = models.CharField(max_length=64, unique=True)
     contributions = models.PositiveIntegerField(default=0)
     repositories = models.PositiveIntegerField(default=0)
@@ -142,10 +144,11 @@ class githubUser(models.Model):
 
 
 class openlakeContributor(models.Model):
+    _id = ObjectIdField(primary_key=True, default = '')
     username = models.CharField(max_length=64, unique=True)
     contributions = models.PositiveIntegerField(default=0)
     last_updated = models.DateTimeField(auto_now=True)
-
+    # _id = ObjectIdField(primary_key=True, default = '')
     @property
     def is_outdated(self):
         if datetime.now(tz=timezone.utc) - self.last_updated > timedelta(
@@ -163,6 +166,8 @@ class openlakeContributor(models.Model):
 
 
 class codeforcesUser(models.Model):
+    # _id = ObjectIdField(primary_key=True, default = '')
+    _id = ObjectIdField(primary_key=True, default = '')
     username = models.CharField(max_length=64, unique=True)
     max_rating = models.PositiveIntegerField(default=0)
     rating = models.PositiveIntegerField(default=0)
@@ -171,7 +176,7 @@ class codeforcesUser(models.Model):
     )
     last_updated = models.DateTimeField(auto_now=True)
     avatar = models.CharField(max_length=256, default="")
-
+    
     @property
     def is_outdated(self):
         if datetime.now(tz=timezone.utc) - self.last_updated > timedelta(
@@ -189,6 +194,8 @@ class codeforcesUser(models.Model):
 
 
 class codechefUser(models.Model):
+    # _id = ObjectIdField(primary_key=True, default = '')
+    _id = ObjectIdField(primary_key=True, default = '')
     username = models.CharField(max_length=64, unique=True)
     max_rating = models.PositiveIntegerField(default=0)
     Global_rank = models.CharField(max_length=10, default="NA")
@@ -234,6 +241,8 @@ class codeforcesUserRatingUpdate(models.Model):
         ordering = ["timestamp"]
         
 class LeetcodeUser(models.Model):
+    # _id = ObjectIdField(primary_key=True, default = '')
+    _id = ObjectIdField(primary_key=True, default = '')
     username = models.CharField(max_length=64, unique=True)
     ranking = models.PositiveIntegerField(default=0)
     easy_solved = models.PositiveIntegerField(default=0)
@@ -257,6 +266,7 @@ class LeetcodeUser(models.Model):
         ordering = ["ranking"]
 
 class UserNames(models.Model):
+    _id = ObjectIdField(primary_key=True, default = '')
     user =models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     cc_uname = models.CharField(max_length=64)
     cf_uname = models.CharField(max_length=64)
