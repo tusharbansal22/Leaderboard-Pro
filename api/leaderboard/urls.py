@@ -24,6 +24,7 @@ from rest_framework import serializers, viewsets, routers, permissions
 from leaderboard import views
 from leaderboard.models import CustomUser
 # from rest_framework.serializers import ModelSerializer
+from rest_framework.routers import DefaultRouter
 
 import logging
 logger = logging.getLogger(__name__)
@@ -52,9 +53,9 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-router = routers.DefaultRouter()
-router.register(r"users", UserViewSet)
-router.register(r"groups", GroupViewSet)
+router = DefaultRouter()
+router.register(r"users", UserViewSet, basename="user")
+router.register(r"groups", GroupViewSet,basename="group")
 
 
 urlpatterns = [

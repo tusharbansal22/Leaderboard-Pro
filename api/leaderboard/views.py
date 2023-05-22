@@ -148,7 +148,7 @@ class CodeforcesLeaderboard(
                 )
                 cf_user.avatar = user_info.get("avatar", "")
                 cf_user.save()
-
+                
                 url = f"https://codeforces.com/api/user.rating?handle=\
                 {cf_user.username}"
                 rating_update_api_response = requests.get(url).json()
@@ -156,7 +156,7 @@ class CodeforcesLeaderboard(
                     continue
 
                 cf_user = codeforcesUser.objects.get(username=cf_user.username)
-
+                
                 rating_updates = rating_update_api_response.get("result", [])
                 stored_rating_count = (
                     codeforcesUserRatingUpdate.objects.count()
@@ -175,7 +175,7 @@ class CodeforcesLeaderboard(
                         ),
                     )
                     cf_rating_update.save()
-        logger.log(cf_users)
+        
 
         return cf_users
 
