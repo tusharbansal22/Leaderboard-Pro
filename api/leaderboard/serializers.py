@@ -35,7 +35,7 @@ class Cf_Serializer(serializers.ModelSerializer):
     class Meta:
         model = codeforcesUser
         fields = [
-            "id",
+            "_id",
             "username",
             "rating",
             "avatar",
@@ -56,7 +56,7 @@ class Cf_User_Serializer(Cf_Serializer):
     class Meta:
         model = codeforcesUser
         fields = [
-            "id",
+            "_id",
             "username",
             "rating",
             "avatar",
@@ -92,7 +92,7 @@ class CC_Serializer(serializers.ModelSerializer):
     class Meta:
         model = codechefUser
         fields = [
-            "id",
+            "_id",
             "username",
             "rating",
             "max_rating",
@@ -151,7 +151,7 @@ class GH_Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = githubUser
-        fields = ["id", "username", "contributions", "repositories", "stars","avatar",]
+        fields = ["_id", "username", "contributions", "repositories", "stars","avatar",]
 
 
 class OL_Serializer(serializers.ModelSerializer):
@@ -175,7 +175,7 @@ class OL_Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = openlakeContributor
-        fields = ["id", "username", "contributions"]
+        fields = ["_id", "username", "contributions"]
         
 
 

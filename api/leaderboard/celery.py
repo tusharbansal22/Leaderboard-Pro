@@ -2,8 +2,12 @@ import os
 from celery import Celery
 import requests
 
+import logging
+logger = logging.getLogger(__name__)
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "leaderboard.settings")
 app = Celery("leaderboard")
+
 app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
 
@@ -19,6 +23,7 @@ def codechef_user_update(self):
     from bs4 import BeautifulSoup
 
     cc_users = codechefUser.objects.all()
+    
     for i, cc_user in enumerate(cc_users):
         if cc_user.is_outdated:
             url = "https://www.codechef.com/users/{}".format(cc_user.username)
@@ -41,6 +46,7 @@ def codechef_user_update(self):
                 cc_user.Global_rank = ranks[0].strong.text
                 cc_user.Country_rank = ranks[1].strong.text
                 cc_user.save()
+                logger.error(cc_user)
             except:
                 pass
 

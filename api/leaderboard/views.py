@@ -37,28 +37,40 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+# @api_view(["GET"])
+# @permission_classes((AllowAny,))
+# def api_root(request, format=None):
+    
+#     return Response(
+#         {
+#             "codeforces": reverse(
+#                 "codeforces-leaderboard", request=request, format=format
+#             ),
+#             "codechef": reverse(
+#                 "codechef-leaderboard", request=request, format=format
+#             ),
+#             "github": reverse(
+#                 "github-leaderboard", request=request, format=format
+#             ),
+#             "openlake": reverse(
+#                 "openlake-leaderboard", request=request, format=format
+#             ),
+#             # urls from from router:
+#             "users": reverse("user-list", request=request, format=format),
+#             "groups": reverse("group-list", request=request, format=format),
+#         }
+#     )
 @api_view(["GET"])
 @permission_classes((AllowAny,))
 def api_root(request, format=None):
-    return Response(
-        {
-            "codeforces": reverse(
-                "codeforces-leaderboard", request=request, format=format
-            ),
-            "codechef": reverse(
-                "codechef-leaderboard", request=request, format=format
-            ),
-            "github": reverse(
-                "github-leaderboard", request=request, format=format
-            ),
-            "openlake": reverse(
-                "openlake-leaderboard", request=request, format=format
-            ),
-            # urls from from router:
-            "users": reverse("user-list", request=request, format=format),
-            "groups": reverse("group-list", request=request, format=format),
-        }
-    )
+    return Response({
+        "codeforces": reverse("codeforces-leaderboard", request=request, format=format),
+        "codechef": reverse("codechef-leaderboard", request=request, format=format),
+        "github": reverse("github-leaderboard", request=request, format=format),
+        "openlake": reverse("openlake-leaderboard", request=request, format=format),
+        "users": reverse("user-list", request=request, format=format),
+        "groups": reverse("group-list", request=request, format=format),
+    })
 
 
 class GithubUserAPI(
@@ -107,7 +119,7 @@ class CodeforcesLeaderboard(
 ):
     queryset = codeforcesUser.objects.all()
     serializer_class = Cf_Serializer
-    logger.error(queryset)
+    
     def _check_for_updates(self, cf_users):
         cf_outdated_users = []
         for cf_user in cf_users:
@@ -136,7 +148,7 @@ class CodeforcesLeaderboard(
                 )
                 cf_user.avatar = user_info.get("avatar", "")
                 cf_user.save()
-
+                
                 url = f"https://codeforces.com/api/user.rating?handle=\
                 {cf_user.username}"
                 rating_update_api_response = requests.get(url).json()
@@ -144,7 +156,7 @@ class CodeforcesLeaderboard(
                     continue
 
                 cf_user = codeforcesUser.objects.get(username=cf_user.username)
-
+                
                 rating_updates = rating_update_api_response.get("result", [])
                 stored_rating_count = (
                     codeforcesUserRatingUpdate.objects.count()
@@ -163,6 +175,7 @@ class CodeforcesLeaderboard(
                         ),
                     )
                     cf_rating_update.save()
+        
 
         return cf_users
 
