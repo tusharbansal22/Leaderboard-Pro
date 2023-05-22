@@ -55,8 +55,6 @@ INSTALLED_APPS = [
     "django_celery_beat",
     "leaderboard",
     "rest_framework_simplejwt.token_blacklist",
-    "djongo",
-    
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -109,7 +107,7 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
     'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
-    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.MyTokenObtainPairSerializer",
+
     'JTI_CLAIM': 'jti',
 
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
@@ -180,7 +178,6 @@ DATABASES = {
 }
 
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -247,6 +244,3 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": crontab(minute=f"*/{OL_INTV}"),
     },
 }
-
-
-AUTH_USER_MODEL = 'leaderboard.CustomUser'

@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime, timezone, timedelta
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 
 from rest_framework_simplejwt.tokens import OutstandingToken
 from rest_framework_simplejwt.models import TokenUser
@@ -239,7 +239,6 @@ class codeforcesUserRatingUpdate(models.Model):
 
     class Meta:
         ordering = ["timestamp"]
-        
 class LeetcodeUser(models.Model):
     # _id = ObjectIdField(primary_key=True, default = '')
     _id = ObjectIdField(primary_key=True, default = '')
@@ -274,17 +273,17 @@ class UserNames(models.Model):
     lt_uname = models.CharField(max_length=64,default="")
 
 class GithubFriends(models.Model):
-    user =models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
+    user =models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     ghFriend_uname=models.CharField(max_length=64)
 class LeetcodeFriends(models.Model):
-    user =models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
+    user =models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     ltFriend_uname=models.CharField(max_length=64)
 class CodeforcesFriends(models.Model):
-    user =models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
+    user =models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     cfFriend_uname=models.CharField(max_length=64)
 class CodechefFriends(models.Model):
-    user =models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
+    user =models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     ccFriend_uname=models.CharField(max_length=64)
 class OpenlakeFriends(models.Model):
-    user =models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
+    user =models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     olFriend_uname=models.CharField(max_length=64)

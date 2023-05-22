@@ -19,7 +19,7 @@ from rest_framework_simplejwt.views import (
 )
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth.models import  Group
+from django.contrib.auth.models import User, Group
 from rest_framework import serializers, viewsets, routers, permissions
 from leaderboard import views
 from leaderboard.models import CustomUser

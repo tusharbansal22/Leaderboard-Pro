@@ -5,11 +5,11 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated
-from .serializers import UserSerializer,UserNamesSerializer,LeetcodeFriendsSerializer,GithubFriendsSerializer,CodechefFriendsSerializer,CodeforcesFriendsSerializer
+from .serializers import UserNamesSerializer,LeetcodeFriendsSerializer,GithubFriendsSerializer,CodechefFriendsSerializer,CodeforcesFriendsSerializer
 from leaderboard.serializers import Cf_Serializer,CC_Serializer,LT_Serializer,GH_Serializer,OL_Serializer
 from leaderboard.models import UserNames,githubUser,codechefUser,codeforcesUser,LeetcodeUser,openlakeContributor,GithubFriends,LeetcodeFriends,CodechefFriends,CodeforcesFriends,OpenlakeFriends
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
-#from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.models import TokenUser
 from bson import ObjectId
@@ -64,7 +64,6 @@ def post_UserNames(request):
     try:
         # data['user']=request.user.username
         # data=request.data
-        
         username_cc=request.data["cc_uname"]
         username_cf=request.data["cf_uname"]
         username_gh=request.data["gh_uname"]
@@ -131,9 +130,7 @@ def post_UserNames(request):
 @api_view(["POST"])
 @permission_classes((permissions.AllowAny,))
 def registerUser(request):
-    
     try:
-        
         first_name = request.data["first_name"]
         last_name=request.data['last_name']
         email=request.data['email']
