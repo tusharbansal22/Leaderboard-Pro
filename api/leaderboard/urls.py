@@ -53,8 +53,8 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 
 router = routers.DefaultRouter()
-router.register(r"users", UserViewSet)
-router.register(r"groups", GroupViewSet)
+router.register(r"users", UserViewSet, basename="user")
+router.register(r"groups", GroupViewSet, basename="group")
 
 
 urlpatterns = [
