@@ -119,7 +119,9 @@ class CodeforcesLeaderboard(
 ):
     queryset = codeforcesUser.objects.all()
     serializer_class = Cf_Serializer
+
     # logger.error(queryset)
+
     def _check_for_updates(self, cf_users):
         cf_outdated_users = []
         for cf_user in cf_users:
@@ -177,8 +179,6 @@ class CodeforcesLeaderboard(
                         ),
                     )
                     cf_rating_update.save()
-        
-        
         return cf_users
 
     def get(self, request):

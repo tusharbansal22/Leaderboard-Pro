@@ -7,6 +7,9 @@ import pymongo
 import logging
 logger = logging.getLogger(__name__)
 
+import logging
+logger = logging.getLogger(__name__)
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "leaderboard.settings")
 app = Celery("leaderboard")
 

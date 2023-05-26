@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "leaderboard",
     "rest_framework_simplejwt.token_blacklist",
     "djongo",
+
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -108,7 +109,7 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
     'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
-    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.MyTokenObtainPairSerializer",
+
     'JTI_CLAIM': 'jti',
 
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
@@ -160,21 +161,6 @@ DATABASES = {
             'CLIENT': {
                 'host':'mongodb+srv://new-user:'+os.environ.get('DATABASE_PASS')+'@leaderboarddb.ziz89b7.mongodb.net/?retryWrites=true&w=majority' # env('DATABASE_HOST')
             }
-
-
-        # "HOST": 'mongodb+srv://aayush:XknxfaxtZAE8bydB@leaderboarddb.ziz89b7.mongodb.net/BHirank?retryWrites=true&w=majority',
-        # 'USER': 'aayush',
-        # "PASSWORD": 'XknxfaxtZAE8bydB',
-
-#'mongodb+srv://qwerty:9mled9d8G7hwSzD7@leaderboarddb.ziz89b7.mongodb.net/?retryWrites=true&w=majority'
-        # 'CLIENT': {
-        #     "name": 'LeaderBoardPro',
-        #     'host': 'mongodb+srv://user1:AH2sIxqJywwpAMoy@leaderboarddb.ziz89b7.mongodb.net/LeaderBoardPro?retryWrites=true&w=majority',
-        #     'username': 'user1',
-        #     'password': 'AH2sIxqJywwpAMoy',
-        #     'authMechanism': 'SCRAM-SHA-1',
-        # }mongodb+srv://aayush:<password>@leaderboarddb.ziz89b7.mongodb.net/?retryWrites=true&w=majority
-
     }
 }
 
@@ -245,5 +231,4 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": crontab(minute=f"*/{OL_INTV}"),
     },
 }
-
 
