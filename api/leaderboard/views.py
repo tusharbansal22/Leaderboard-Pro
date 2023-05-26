@@ -119,7 +119,9 @@ class CodeforcesLeaderboard(
 ):
     queryset = codeforcesUser.objects.all()
     serializer_class = Cf_Serializer
-    
+
+    # logger.error(queryset)
+
     def _check_for_updates(self, cf_users):
         cf_outdated_users = []
         for cf_user in cf_users:
@@ -127,10 +129,10 @@ class CodeforcesLeaderboard(
                 cf_outdated_users.append(cf_user.username)
 
         cf_api_response = {}
-
+        
         if len(cf_outdated_users) > 0:
-            url = f"https://codeforces.com/api/user.info?handles=\
-            {';'.join(cf_outdated_users)}"
+            url = f"https://codeforces.com/api/user.info?handles=\{';'.join(cf_outdated_users)}"
+            logger.error(url)
             cf_api_response = requests.get(url).json()
             cf_api_response = cf_api_response["result"]
 
@@ -149,10 +151,12 @@ class CodeforcesLeaderboard(
                 cf_user.avatar = user_info.get("avatar", "")
                 cf_user.save()
                 
-                url = f"https://codeforces.com/api/user.rating?handle=\
-                {cf_user.username}"
+                url = f"https://codeforces.com/api/user.rating?handle={cf_user.username}"
+                
                 rating_update_api_response = requests.get(url).json()
-                if rating_update_api_response.get("status", "FAILED") != "OK":
+                # logger.error(rating_update_api_response)
+                # logger.error(cf_user.username)
+                if rating_update_api_response.get("status", "FAILED") != "OK": 
                     continue
 
                 cf_user = codeforcesUser.objects.get(username=cf_user.username)
@@ -175,8 +179,6 @@ class CodeforcesLeaderboard(
                         ),
                     )
                     cf_rating_update.save()
-        
-
         return cf_users
 
     def get(self, request):

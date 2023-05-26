@@ -87,6 +87,15 @@ class CustomUser(AbstractBaseUser):
 
 
 
+class HexadecimalAutoField(models.AutoField):
+    def to_python(self, value):
+        value = super().to_python(value)
+        if value is not None:
+            return hex(value)[2:]  # Remove the '0x' prefix from hexadecimal representation
+        return value
+
+
+
 
 
 # Your other models here...

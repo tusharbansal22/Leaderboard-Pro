@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     "django_celery_beat",
     "leaderboard",
     "rest_framework_simplejwt.token_blacklist",
+    "djongo",
+
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -159,21 +161,6 @@ DATABASES = {
             'CLIENT': {
                 'host':'mongodb+srv://new-user:'+os.environ.get('DATABASE_PASS')+'@leaderboarddb.ziz89b7.mongodb.net/?retryWrites=true&w=majority' # env('DATABASE_HOST')
             }
-
-
-        # "HOST": 'mongodb+srv://aayush:XknxfaxtZAE8bydB@leaderboarddb.ziz89b7.mongodb.net/BHirank?retryWrites=true&w=majority',
-        # 'USER': 'aayush',
-        # "PASSWORD": 'XknxfaxtZAE8bydB',
-
-#'mongodb+srv://qwerty:9mled9d8G7hwSzD7@leaderboarddb.ziz89b7.mongodb.net/?retryWrites=true&w=majority'
-        # 'CLIENT': {
-        #     "name": 'LeaderBoardPro',
-        #     'host': 'mongodb+srv://user1:AH2sIxqJywwpAMoy@leaderboarddb.ziz89b7.mongodb.net/LeaderBoardPro?retryWrites=true&w=majority',
-        #     'username': 'user1',
-        #     'password': 'AH2sIxqJywwpAMoy',
-        #     'authMechanism': 'SCRAM-SHA-1',
-        # }mongodb+srv://aayush:<password>@leaderboarddb.ziz89b7.mongodb.net/?retryWrites=true&w=majority
-
     }
 }
 
@@ -208,7 +195,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+AUTH_USER_MODEL = 'leaderboard.CustomUser'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -217,7 +204,7 @@ STATIC_URL = "/static/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+DEFAULT_AUTO_FIELD = "leaderboard.models.HexadecimalAutoField"
 
 CC_INTV = 1
 GH_INTV = 15
@@ -244,3 +231,4 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": crontab(minute=f"*/{OL_INTV}"),
     },
 }
+

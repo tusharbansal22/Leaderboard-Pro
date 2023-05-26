@@ -1,6 +1,11 @@
 import os
 from celery import Celery
 import requests
+from djongo import models
+import pymongo
+
+import logging
+logger = logging.getLogger(__name__)
 
 import logging
 logger = logging.getLogger(__name__)
@@ -15,13 +20,16 @@ def listToString(s):
     str1 = ""
     for ele in s:
         str1 += ele
+        logger.error(str1)
     return str1
+
+
 
 @app.task(bind=True)
 def codechef_user_update(self):
     from leaderboard.models import codechefUser
     from bs4 import BeautifulSoup
-
+    logger.error("aayush")
     cc_users = codechefUser.objects.all()
     
     for i, cc_user in enumerate(cc_users):
@@ -45,6 +53,7 @@ def codechef_user_update(self):
                 ranks = container_ranks.find_all("a")
                 cc_user.Global_rank = ranks[0].strong.text
                 cc_user.Country_rank = ranks[1].strong.text
+                logger.error()
                 cc_user.save()
                 logger.error(cc_user)
             except:
@@ -98,6 +107,7 @@ def leetcode_user_update(self):
             lt_user.hard_solved=int(listToString(lt_questions[2].text.split(',')))
             lt_user.avatar=ttg[-1]['src']
             lt_user.save()
+            
 @app.task(bind=True)
 def openlake_contributor__update(self):
     from leaderboard.models import openlakeContributor

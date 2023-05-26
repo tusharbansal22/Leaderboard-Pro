@@ -9,10 +9,11 @@ from .serializers import UserNamesSerializer,LeetcodeFriendsSerializer,GithubFri
 from leaderboard.serializers import Cf_Serializer,CC_Serializer,LT_Serializer,GH_Serializer,OL_Serializer
 from leaderboard.models import UserNames,githubUser,codechefUser,codeforcesUser,LeetcodeUser,openlakeContributor,GithubFriends,LeetcodeFriends,CodechefFriends,CodeforcesFriends,OpenlakeFriends
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.models import TokenUser
 from bson import ObjectId
+
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
