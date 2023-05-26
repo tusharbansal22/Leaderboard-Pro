@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "django_celery_beat",
     "leaderboard",
     "rest_framework_simplejwt.token_blacklist",
+    "djongo",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -107,7 +108,7 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
     'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
-
+    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.MyTokenObtainPairSerializer",
     'JTI_CLAIM': 'jti',
 
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
@@ -208,7 +209,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+AUTH_USER_MODEL = 'leaderboard.CustomUser'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -217,7 +218,7 @@ STATIC_URL = "/static/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+DEFAULT_AUTO_FIELD = "leaderboard.models.HexadecimalAutoField"
 
 CC_INTV = 1
 GH_INTV = 15
@@ -244,3 +245,5 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": crontab(minute=f"*/{OL_INTV}"),
     },
 }
+
+

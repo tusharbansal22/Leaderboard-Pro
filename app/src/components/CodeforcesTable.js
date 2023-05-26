@@ -47,9 +47,11 @@ export const CodeforcesTable = ({
         Authorization:
           "Bearer " + JSON.parse(localStorage.getItem("authTokens")).access,
       },
+      
     });
 
     const newData = await response.json();
+    //console.log(JSON.parse(localStorage.getItem("authTokens")).access);
     setCodeforcesfriends(newData);
     // setTodisplayusers(codeforcesUsers)
     // setFilteredusers(codeforcesUsers)
