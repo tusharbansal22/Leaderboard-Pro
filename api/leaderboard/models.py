@@ -132,7 +132,7 @@ class HexadecimalAutoField(models.AutoField):
 
 class githubUser(models.Model):
     # _id = ObjectIdField(primary_key=True, default = '')
-    _id = ObjectIdField(primary_key=True, default = '')
+    _id = ObjectId()
     username = models.CharField(max_length=64, unique=True)
     contributions = models.PositiveIntegerField(default=0)
     repositories = models.PositiveIntegerField(default=0)
@@ -153,7 +153,7 @@ class githubUser(models.Model):
 
 
 class openlakeContributor(models.Model):
-    _id = ObjectIdField(primary_key=True, default = '')
+    _id = ObjectId()
     username = models.CharField(max_length=64, unique=True)
     contributions = models.PositiveIntegerField(default=0)
     last_updated = models.DateTimeField(auto_now=True)
@@ -176,7 +176,7 @@ class openlakeContributor(models.Model):
 
 class codeforcesUser(models.Model):
     # _id = ObjectIdField(primary_key=True, default = '')
-    _id = ObjectIdField(primary_key=True, default = '')
+    _id = ObjectId()
     username = models.CharField(max_length=64, unique=True)
     max_rating = models.PositiveIntegerField(default=0)
     rating = models.PositiveIntegerField(default=0)
@@ -204,7 +204,7 @@ class codeforcesUser(models.Model):
 
 class codechefUser(models.Model):
     # _id = ObjectIdField(primary_key=True, default = '')
-    _id = ObjectIdField(primary_key=True, default = '')
+    _id = ObjectId()
     username = models.CharField(max_length=64, unique=True)
     max_rating = models.PositiveIntegerField(default=0)
     Global_rank = models.CharField(max_length=10, default="NA")
@@ -274,7 +274,7 @@ class LeetcodeUser(models.Model):
         ordering = ["ranking"]
 
 class UserNames(models.Model):
-    _id = ObjectIdField(primary_key=True, default = '')
+    _id = ObjectId()
     user =models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     cc_uname = models.CharField(max_length=64)
     cf_uname = models.CharField(max_length=64)
@@ -282,17 +282,17 @@ class UserNames(models.Model):
     lt_uname = models.CharField(max_length=64,default="")
 
 class GithubFriends(models.Model):
-    user =models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    user =models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     ghFriend_uname=models.CharField(max_length=64)
 class LeetcodeFriends(models.Model):
-    user =models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    user =models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     ltFriend_uname=models.CharField(max_length=64)
 class CodeforcesFriends(models.Model):
-    user =models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    user =models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     cfFriend_uname=models.CharField(max_length=64)
 class CodechefFriends(models.Model):
-    user =models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    user =models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     ccFriend_uname=models.CharField(max_length=64)
 class OpenlakeFriends(models.Model):
-    user =models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    user =models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     olFriend_uname=models.CharField(max_length=64)

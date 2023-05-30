@@ -7,9 +7,6 @@ import pymongo
 import logging
 logger = logging.getLogger(__name__)
 
-import logging
-logger = logging.getLogger(__name__)
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "leaderboard.settings")
 app = Celery("leaderboard")
 
@@ -24,12 +21,11 @@ def listToString(s):
     return str1
 
 
-
 @app.task(bind=True)
 def codechef_user_update(self):
     from leaderboard.models import codechefUser
     from bs4 import BeautifulSoup
-    logger.error("aayush")
+    
     cc_users = codechefUser.objects.all()
     
     for i, cc_user in enumerate(cc_users):
